@@ -7,8 +7,8 @@
  * from the Supabase Project Dashboard (Settings -> API).
  */
 
-const SUPABASE_URL = "YOUR_SUPABASE_URL";
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+const SUPABASE_URL = "https://windinkwlpdvqoqxjezx.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndpbmRpbmt3bHBkdnFvcXhqZXp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc2MDY1NzAsImV4cCI6MjEwMzE4MjU3MH0.qLlB_ULpdB496CaoWB1yrAPM7n5x_T1562_h6I9IWJk";
 
 // Default Storage Bucket Name
 const STORAGE_BUCKET = "lottery-images";
