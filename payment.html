@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="am" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>የሎተሪ ቲኬት መቁረጫ | Ethiopian Online Lottery Payment</title>
+  <meta name="description" content="የኢትዮጲያ ሎተሪ እጣ - የክፍያ አማራጮች እና የቲኬት መቁረጫ ገጽ። Payment methods and ticket purchasing page.">
+  <meta name="robots" content="noindex, follow">
+
+  <!-- Google Fonts & Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Supabase CDN Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <!-- =========================================================================
+       1. TOP LANGUAGE SELECTOR
+       ========================================================================= -->
+  <aside class="lang-topbar" aria-label="Language Selector">
+    <div class="container lang-container">
+      <div class="lang-title-badge">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="2" y1="12" x2="22" y2="12"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+        <span data-i18n="selectLanguage">ቋንቋ ይምረጡ</span>
+      </div>
+
+      <nav class="lang-options-grid" aria-label="Languages">
+        <button type="button" class="lang-btn active-lang" data-lang="am">🇪🇹 አማርኛ</button>
+        <button type="button" class="lang-btn" data-lang="en">🇬🇧 English</button>
+        <button type="button" class="lang-btn" data-lang="om">🇪🇹 Afaan Oromoo</button>
+        <button type="button" class="lang-btn" data-lang="ti">🇪🇹 ትግርኛ</button>
+        <button type="button" class="lang-btn" data-lang="ar">🇸🇦 العربية</button>
+        <button type="button" class="lang-btn" data-lang="sid">🇪🇹 Sidaamu Afoo</button>
+        <button type="button" class="lang-btn" data-lang="so">🇸🇴 Af-Soomaali</button>
+        <button type="button" class="lang-btn" data-lang="wal">🇪🇹 Wolayttatto</button>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       2. HEADER
+       ========================================================================= -->
+  <header class="site-header" style="padding: 1.25rem 0 1.5rem 0;">
+    <div class="container" style="display: flex; align-items: center; justify-content: space-between;">
+      <a href="index.html" class="brand-wrapper" style="display: flex; align-items: center; gap: 0.75rem; text-decoration: none;">
+        <div class="brand-emblem" style="width: 48px; height: 48px; margin-bottom: 0;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#07130e" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div style="text-align: left;">
+          <h1 class="brand-title" style="font-size: 1.6rem; margin-bottom: 0;" data-i18n="appTitle">የኢትዮጲያ ሎተሪ እጣ</h1>
+          <span style="font-size: 0.85rem; color: var(--gold-light);" data-i18n="paymentTitle">የሎተሪ ቲኬት መቁረጫ</span>
+        </div>
+      </a>
+
+      <a href="index.html" class="btn-emerald" style="padding: 0.5rem 1.2rem; font-size: 0.9rem;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+        <span data-i18n="backToHome">ወደ ዋናው ገጽ</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       3. PAYMENT & TICKET PURCHASE FORM MAIN
+       ========================================================================= -->
+  <main class="payment-main">
+    <div class="container">
+      
+      <!-- Selected Prize Banner -->
+      <div class="selected-prize-banner" id="selected-prize-banner">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--gold-glow); display: flex; align-items: center; justify-content: center; border: 1px solid var(--gold-primary);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold-pure)" stroke-width="2.2"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+          </div>
+          <div>
+            <div style="font-size: 0.85rem; color: var(--gold-light);" data-i18n="selectedPrizeSummary">የተመረጠው ሽልማት</div>
+            <h2 id="summary-prize-title" style="font-size: 1.25rem; font-weight: 800; color: #ffffff;">መኪና - ቶዮታ ቪ8 2024</h2>
+          </div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-size: 0.8rem; color: var(--text-sub);" data-i18n="ticketPriceLabel">የቲኬት ዋጋ:</div>
+          <div id="summary-prize-price" style="font-size: 1.5rem; font-weight: 900; color: var(--gold-pure);">500 ብር</div>
+        </div>
+      </div>
+
+      <div class="payment-grid">
+        
+        <!-- Column 1: Payment Accounts -->
+        <section class="payment-methods-col">
+          <div class="section-header" style="text-align: left; margin-bottom: 1.25rem;">
+            <h3 class="section-title" style="font-size: 1.5rem;" data-i18n="paymentMethodsTitle">የክፍያ አማራጮች</h3>
+            <p class="section-subtitle" style="margin: 0.4rem 0 0 0;" data-i18n="paymentMethodsSubtitle">ከታች ከተዘረዘሩት የባንክ ወይም የቴሌብር ሂሳቦች በአንዱ ክፍያ ይፈጽሙ</p>
+          </div>
+
+          <div class="payment-methods-wrapper" id="payment-methods-container">
+            
+            <!-- CBE Card -->
+            <div class="payment-method-card cbe-card" id="card-cbe">
+              <div class="pay-card-header">
+                <div class="pay-bank-name">
+                  <span style="display:inline-block; width: 14px; height: 14px; border-radius: 50%; background: #9333ea;"></span>
+                  <span>ንግድ ባንክ</span>
+                </div>
+                <span class="category-badge">CBE</span>
+              </div>
+              <div class="pay-account-box">
+                <span class="pay-account-number" id="acc-cbe">1000327468956</span>
+                <button type="button" class="btn-copy" data-target="acc-cbe">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                  <span data-i18n="clickToCopy">ኮፒ አድርግ</span>
+                </button>
+              </div>
+              <div class="pay-account-holder" data-i18n="accountHolder">የሂሳብ ስም፡ የኢትዮጵያ ብሔራዊ ሎተሪ አስተዳደር</div>
+            </div>
+
+            <!-- Telebirr Card -->
+            <div class="payment-method-card telebirr-card" id="card-telebirr">
+              <div class="pay-card-header">
+                <div class="pay-bank-name">
+                  <span style="display:inline-block; width: 14px; height: 14px; border-radius: 50%; background: #0284c7;"></span>
+                  <span>ቴሌብር</span>
+                </div>
+                <span class="category-badge" style="border-color: #0284c7; color: #38bdf8;">Telebirr</span>
+              </div>
+              <div class="pay-account-box">
+                <span class="pay-account-number" id="acc-telebirr">0964202064</span>
+                <button type="button" class="btn-copy" data-target="acc-telebirr">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                  <span data-i18n="clickToCopy">ኮፒ አድርግ</span>
+                </button>
+              </div>
+              <div class="pay-account-holder" data-i18n="phoneNumber">ስልክ ቁጥር፡ 0964202064 (ቴሌብር)</div>
+            </div>
+
+            <!-- Bank of Abyssinia Card -->
+            <div class="payment-method-card boa-card" id="card-boa">
+              <div class="pay-card-header">
+                <div class="pay-bank-name">
+                  <span style="display:inline-block; width: 14px; height: 14px; border-radius: 50%; background: #eab308;"></span>
+                  <span>አቢሲኒያ ባንክ</span>
+                </div>
+                <span class="category-badge" style="border-color: #eab308; color: #fde047;">Abyssinia</span>
+              </div>
+              <div class="pay-account-box">
+                <span class="pay-account-number" id="acc-boa">264416817</span>
+                <button type="button" class="btn-copy" data-target="acc-boa">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                  <span data-i18n="clickToCopy">ኮፒ አድርግ</span>
+                </button>
+              </div>
+              <div class="pay-account-holder" data-i18n="accountHolder">የሂሳብ ስም፡ የኢትዮጵያ ብሔራዊ ሎተሪ አስተዳደር</div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Column 2: Customer Ticket Form & Screenshot Upload -->
+        <section class="customer-form-col">
+          <div class="customer-form-card">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold-pure)" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <h3 style="font-size: 1.4rem; font-weight: 800; color: #ffffff;" data-i18n="customerFormTitle">የተጠቃሚ መረጃ እና የክፍያ ማረጋገጫ</h3>
+            </div>
+
+            <form id="ticket-purchase-form" novalidate>
+              
+              <!-- 1. Category / Prize Selector (If user wants to switch) -->
+              <div class="form-group">
+                <label class="form-label" data-i18n="categoriesTitle">የሽልማት አይነት</label>
+                <select id="form-category-select" class="form-input">
+                  <option value="car">መኪና (Car)</option>
+                  <option value="condo">ኮንደሚኒዬም (Condominium)</option>
+                  <option value="phones">ዘመናዊ ስልኮች (Smartphones)</option>
+                  <option value="cash">ገንዘብ (Cash Prize)</option>
+                  <option value="laptop">ላፕቶፕ (Laptops)</option>
+                  <option value="tv">ቴሌቪዥን (Smart TVs)</option>
+                  <option value="sheep">በግ (Holiday Sheep)</option>
+                </select>
+              </div>
+
+              <!-- 2. Section Selector -->
+              <div class="form-group">
+                <label class="form-label" data-i18n="section1Title">የሽልማት ክፍል (Section)</label>
+                <select id="form-section-select" class="form-input">
+                  <option value="1">ክፍል 1 - ዋናው ፕሪሚየም ሽልማት (Section 1)</option>
+                  <option value="2">ክፍል 2 - ልዩ የሁለተኛ ደረጃ ሽልማት (Section 2)</option>
+                </select>
+              </div>
+
+              <!-- 3. Customer Phone Number Input (ስልክ ቁጥር) -->
+              <div class="form-group">
+                <label class="form-label" for="customer-phone">
+                  <span data-i18n="phoneInputLabel">ስልክ ቁጥር</span> <span style="color: #ef4444;">*</span>
+                </label>
+                <input 
+                  type="tel" 
+                  id="customer-phone" 
+                  class="form-input" 
+                  placeholder="ምሳሌ፡ 0911223344 ወይም 0711223344"
+                  data-i18n-placeholder="phonePlaceholder"
+                  required
+                  autocomplete="tel"
+                >
+                <div class="form-help" data-i18n="phoneHelp">አሸናፊ ከሆኑ በዚህ ስልክ ቁጥር እንደውላለን</div>
+                <div id="phone-error-msg" style="color: #ef4444; font-size: 0.85rem; margin-top: 0.35rem; display: none;"></div>
+              </div>
+
+              <!-- 4. Payment Screenshot Upload (የክፍያ ምስል አስገባ) -->
+              <div class="form-group">
+                <label class="form-label">
+                  <span data-i18n="uploadProofLabel">የክፍያ ምስል አስገባ (Screenshot)</span> <span style="color: #ef4444;">*</span>
+                </label>
+                
+                <div class="upload-dropzone" id="upload-dropzone">
+                  <input type="file" id="payment-proof-input" accept="image/*" required>
+                  <div id="dropzone-prompt">
+                    <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                    <div class="upload-text-main" data-i18n="uploadProofPlaceholder">የክፍያ ደረሰኝ ምስል እዚህ ይጎትቱ ወይም ፋይል ይምረጡ</div>
+                    <div class="upload-text-sub" data-i18n="uploadProofHelp">የባንክ ወይም የቴሌብር የክፍያ ማረጋገጫ ምስል (JPG, PNG, WebP)</div>
+                  </div>
+
+                  <!-- Live Preview after choosing file -->
+                  <div id="dropzone-preview" style="display: none;">
+                    <img id="preview-image-el" class="upload-preview-img" src="" alt="Payment Proof Preview">
+                    <div style="margin-top: 0.5rem;">
+                      <span class="category-badge" id="file-name-badge">receipt.jpg</span>
+                      <button type="button" id="btn-remove-preview" class="btn-sm btn-danger" style="margin-left: 0.5rem;" data-i18n="changeFile">ፋይል ቀይር</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="proof-error-msg" style="color: #ef4444; font-size: 0.85rem; margin-top: 0.35rem; display: none;"></div>
+              </div>
+
+              <!-- 5. Submit Button (አስገባ) -->
+              <button type="submit" id="btn-submit-ticket" class="btn-primary" style="padding: 1rem; font-size: 1.2rem;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span id="submit-btn-text" data-i18n="submitButton">አስገባ</span>
+              </button>
+
+            </form>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- =========================================================================
+       4. SUCCESS POPUP / MODAL
+       Containing exact required message:
+       "በአዲስ አመት መስከረም 17 አሸናፊ ከሆኑ በስልኮ መልዕክት ይደርሶታል!"
+       ========================================================================= -->
+  <div class="modal-backdrop" id="success-modal" role="dialog" aria-modal="true">
+    <div class="modal-card success-modal-card">
+      <div class="success-check-icon">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+
+      <h3 class="success-headline-text" data-i18n="successHeadline">
+        እንኳን ደስ አሎት! ቲኬትዎ በተሳካ ሁኔታ ተመዝግቧል
+      </h3>
+
+      <!-- Exact Required Success Message -->
+      <div class="success-exact-message">
+        በአዲስ አመት መስከረም 17 አሸናፊ ከሆኑ በስልኮ መልዕክት ይደርሶታል!
+      </div>
+
+      <!-- Ticket Receipt Card -->
+      <div class="ticket-receipt-card">
+        <div class="receipt-row">
+          <span style="color: var(--text-sub);" data-i18n="ticketNumberLabel">የቲኬት መለያ ቁጥር:</span>
+          <span id="modal-ticket-id" style="font-weight: 800; color: var(--gold-pure); font-family: monospace;">TKT-893421</span>
+        </div>
+        <div class="receipt-row">
+          <span style="color: var(--text-sub);" data-i18n="phoneNumber">ስልክ ቁጥር:</span>
+          <span id="modal-ticket-phone" style="font-weight: 700; color: #ffffff;">0911223344</span>
+        </div>
+        <div class="receipt-row">
+          <span style="color: var(--text-sub);" data-i18n="selectedPrizeSummary">የተመረጠው ሽልማት:</span>
+          <span id="modal-ticket-prize" style="font-weight: 700; color: var(--text-muted);">መኪና (Toyota V8)</span>
+        </div>
+        <div class="receipt-row">
+          <span style="color: var(--text-sub);" data-i18n="dateLabel">የተቆረጠበት ቀን:</span>
+          <span id="modal-ticket-date" style="font-weight: 700; color: var(--text-sub);">2026-08-24</span>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <button type="button" id="btn-print-voucher" class="btn-emerald" style="width: 100%;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+          <span data-i18n="downloadReceipt">ደረሰኝ አውርድ</span>
+        </button>
+
+        <a href="index.html" class="btn-primary" style="width: 100%;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span data-i18n="backToHome">ወደ ዋናው ገጽ ተመለስ</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold-pure)" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    <span id="toast-message">ቁጥሩ ተቀድቷል!</span>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="/translations.js"></script>
+  <script type="module" src="/supabase-client.js"></script>
+  <script type="module" src="/payment.js"></script>
+</body>
+</html>

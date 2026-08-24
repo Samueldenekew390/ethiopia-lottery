@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="am" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>የአስተዳዳሪ መቆጣጠሪያ ክፍል | Ethiopian Lottery Admin Portal</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Google Fonts & Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Supabase CDN Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body style="background: #0a0502;">
+
+  <!-- =========================================================================
+       1. ADMIN AUTHENTICATION / LOGIN SCREEN
+       ========================================================================= -->
+  <div id="admin-login-view" class="admin-login-body">
+    <div class="admin-login-card">
+      <div class="brand-emblem" style="width: 56px; height: 56px; margin: 0 auto 1rem auto;">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#07130e" stroke-width="2.5"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+
+      <h2 style="font-size: 1.6rem; font-weight: 900; color: #ffffff; margin-bottom: 0.25rem;">
+        የአስተዳዳሪ መግቢያ
+      </h2>
+      <p style="color: var(--text-sub); font-size: 0.85rem; margin-bottom: 1.5rem;">
+        Ethiopian Lottery Admin Management Portal
+      </p>
+
+      <form id="admin-login-form" novalidate>
+        <div class="form-group" style="text-align: left;">
+          <label class="form-label" for="admin-email">ኢሜል (Email)</label>
+          <input type="email" id="admin-email" class="form-input" placeholder="admin@lottery.et" value="admin@lottery.et" required>
+        </div>
+
+        <div class="form-group" style="text-align: left;">
+          <label class="form-label" for="admin-password">የይለፍ ቃል (Password)</label>
+          <input type="password" id="admin-password" class="form-input" placeholder="••••••••" value="Admin@2025" required>
+        </div>
+
+        <div id="login-error-msg" style="color: #ef4444; font-size: 0.85rem; margin-bottom: 1rem; display: none;"></div>
+
+        <button type="submit" id="btn-admin-login" class="btn-primary" style="width: 100%; padding: 0.9rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          <span id="login-btn-text">ግባ (Sign In)</span>
+        </button>
+
+        <div style="margin-top: 1rem; font-size: 0.75rem; color: var(--text-sub);">
+          Default Demo: <code style="color: var(--gold-light);">admin@lottery.et</code> / <code style="color: var(--gold-light);">Admin@2025</code>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       2. AUTHENTICATED ADMIN DASHBOARD
+       ========================================================================= -->
+  <div id="admin-dashboard-view" class="admin-dashboard-container">
+    
+    <!-- Top Navigation Bar -->
+    <header class="admin-topbar">
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <div class="brand-emblem" style="width: 38px; height: 38px; margin-bottom: 0;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#07130e" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div>
+          <h1 style="font-size: 1.25rem; font-weight: 800; color: #ffffff;">የኢትዮጲያ ሎተሪ እጣ - Admin Control Panel</h1>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span id="supabase-status-badge" class="category-badge" style="font-size: 0.7rem; padding: 0.15rem 0.5rem; background: rgba(16, 185, 129, 0.2); border-color: #10b981; color: #6ee7b7;">
+              ● Storage & DB Active
+            </span>
+            <span id="admin-user-email" style="font-size: 0.8rem; color: var(--text-sub);">admin@lottery.et</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <a href="index.html" target="_blank" class="btn-emerald" style="padding: 0.45rem 0.9rem; font-size: 0.85rem;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          <span>የህዝብ ገጽን ክፈት (View Site)</span>
+        </a>
+
+        <button type="button" id="btn-admin-logout" class="btn-sm btn-danger" style="padding: 0.5rem 1rem;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>ውጣ (Logout)</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Admin Body -->
+    <main style="padding: 1.5rem 0; flex-grow: 1;">
+      <div class="container">
+        
+        <!-- Navigation Tabs -->
+        <nav class="admin-nav-tabs" aria-label="Admin Navigation">
+          <button type="button" class="admin-tab-btn active" data-tab="tab-images">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+            <span>የምስል አስተዳደር (Image Manager)</span>
+          </button>
+
+          <button type="button" class="admin-tab-btn" data-tab="tab-purchases">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>የደንበኞች ቲኬቶች (Customer Purchases)</span>
+            <span id="purchases-count-badge" class="category-badge" style="background: var(--gold-primary); color: #07130e; margin-left: 0.25rem;">0</span>
+          </button>
+
+          <button type="button" class="admin-tab-btn" data-tab="tab-payments">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            <span>የክፍያ አካውንቶች (Payment Methods)</span>
+          </button>
+
+          <button type="button" class="admin-tab-btn" data-tab="tab-supabase">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <span>Supabase DB & SQL Setup</span>
+          </button>
+        </nav>
+
+        <!-- =====================================================================
+             TAB 1: IMAGE MANAGEMENT SYSTEM (Fully Functional)
+             ===================================================================== -->
+        <section id="tab-images" class="admin-tab-content active">
+          
+          <!-- Sub-Tab: Header Image -->
+          <div class="promo-card" style="text-align: left; margin-bottom: 2rem; padding: 1.5rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+              <h3 style="font-size: 1.3rem; font-weight: 800; color: #ffffff; display: flex; align-items: center; gap: 0.5rem;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold-pure)" stroke-width="2.2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                <span>ዋና የራስጌ ምስል (Header Image)</span>
+              </h3>
+              <span class="category-badge">Supabase Storage</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;" class="header-editor-grid">
+              <div style="height: 180px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-active); background: #000;">
+                <img id="admin-header-preview" src="" alt="Header Preview" style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+
+              <div>
+                <label class="form-label">አዲስ የራስጌ ምስል ይስቀሉ (Upload to Supabase Storage)</label>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem;">
+                  <input type="file" id="admin-header-file-input" accept="image/*" style="display: none;">
+                  <button type="button" class="btn-emerald" id="btn-select-header-file">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    <span>ምስል ይምረጡና ይስቀሉ (Choose & Upload)</span>
+                  </button>
+                  <button type="button" class="btn-sm btn-danger" id="btn-reset-header-img">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/></svg>
+                    <span>ወደ ነባሪ መልስ (Reset Default)</span>
+                  </button>
+                </div>
+                
+                <label class="form-label" style="font-size: 0.85rem; color: var(--text-sub);">ወይም የምስል ሊንክ (Direct Image URL)</label>
+                <div style="display: flex; gap: 0.5rem;">
+                  <input type="url" id="admin-header-url-input" class="form-input" placeholder="https://..." style="padding: 0.5rem 0.85rem; font-size: 0.9rem;">
+                  <button type="button" class="btn-primary" id="btn-save-header-url" style="width: auto; padding: 0.5rem 1.25rem;">አስቀምጥ (Save)</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Category Preview & Detail Section Image Slots -->
+          <div style="margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h3 style="font-size: 1.4rem; font-weight: 800; color: #ffffff;">
+                የ 7ቱ የሽልማት አይነቶች ምስሎች (Category & Section Images)
+              </h3>
+              <p style="color: var(--text-sub); font-size: 0.85rem;">
+                እያንዳንዱ ሽልማት 2 የቅድመ-እይታ ምስሎች እና 2 የዝርዝር ክፍሎች (Sections) አሉት።
+              </p>
+            </div>
+
+            <!-- Category Filter Selector -->
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="font-size: 0.9rem; color: var(--gold-light);">ሽልማት ምረጥ:</span>
+              <select id="admin-category-filter" class="form-input" style="width: auto; padding: 0.4rem 0.8rem;">
+                <option value="all">ሁሉንም አሳይ (All Categories)</option>
+                <option value="car">1. መኪና (Car)</option>
+                <option value="condo">2. ኮንደሚኒዬም (Condominium)</option>
+                <option value="phones">3. ዘመናዊ ስልኮች (Smartphones)</option>
+                <option value="cash">4. ገንዘብ (Cash)</option>
+                <option value="laptop">5. ላፕቶፕ (Laptop)</option>
+                <option value="tv">6. ቴሌቪዥን (TV)</option>
+                <option value="sheep">7. በግ (Sheep)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Grid of Functional Image Slots (Generated by admin.js) -->
+          <div class="image-slots-grid" id="admin-image-slots-container">
+            <!-- Populated dynamically with functional upload/replace/delete buttons for every slot -->
+          </div>
+        </section>
+
+        <!-- =====================================================================
+             TAB 2: CUSTOMER TICKET PURCHASES (With Delete & Zoom)
+             ===================================================================== -->
+        <section id="tab-purchases" class="admin-tab-content" style="display: none;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;">
+            <div>
+              <h3 style="font-size: 1.4rem; font-weight: 800; color: #ffffff;">የተቆረጡ የሎተሪ ቲኬቶች (Customer Purchases)</h3>
+              <p style="color: var(--text-sub); font-size: 0.85rem;">ደንበኞች የላኳቸው የስልክ ቁጥሮች እና የክፍያ ማረጋገጫ ምስሎች</p>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem;">
+              <input type="search" id="purchases-search-input" class="form-input" placeholder="በስልክ ቁጥር ፈልግ..." style="padding: 0.45rem 0.85rem; width: 220px; font-size: 0.9rem;">
+              <button type="button" id="btn-export-csv" class="btn-emerald" style="padding: 0.45rem 0.9rem; font-size: 0.85rem;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Export CSV</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>ቲኬት ቁጥር (ID)</th>
+                  <th>ስልክ ቁጥር (Phone)</th>
+                  <th>የተመረጠው ሽልማት (Prize)</th>
+                  <th>ዋጋ (Price)</th>
+                  <th>የክፍያ ምስል (Screenshot)</th>
+                  <th>ቀንና ሰዓት (Date)</th>
+                  <th>ሁኔታ (Status)</th>
+                  <th>እርምጃ (Actions)</th>
+                </tr>
+              </thead>
+              <tbody id="purchases-table-body">
+                <!-- Injected dynamically by admin.js -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- =====================================================================
+             TAB 3: PAYMENT METHODS MANAGEMENT (Add/Edit/Delete)
+             ===================================================================== -->
+        <section id="tab-payments" class="admin-tab-content" style="display: none;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+            <div>
+              <h3 style="font-size: 1.4rem; font-weight: 800; color: #ffffff;">የክፍያ አካውንቶች አስተዳደር (Payment Accounts)</h3>
+              <p style="color: var(--text-sub); font-size: 0.85rem;">በክፍያ ገጹ ላይ ለተጠቃሚዎች የሚታዩትን የባንክና የቴሌብር ሂሳቦች ያክሉ ወይም ያርትዑ</p>
+            </div>
+
+            <button type="button" id="btn-add-payment-method" class="btn-primary" style="width: auto; padding: 0.5rem 1.25rem;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <span>አዲስ የክፍያ አካውንት ጨምር (Add Account)</span>
+            </button>
+          </div>
+
+          <div class="categories-grid" id="admin-payment-methods-grid">
+            <!-- Injected by admin.js -->
+          </div>
+        </section>
+
+        <!-- =====================================================================
+             TAB 4: SUPABASE SQL & CLOUD SETUP GUIDE
+             ===================================================================== -->
+        <section id="tab-supabase" class="admin-tab-content" style="display: none;">
+          <div class="customer-form-card" style="margin-bottom: 1.5rem;">
+            <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--gold-pure); margin-bottom: 0.5rem;">
+              1-Click Supabase SQL Setup Script
+            </h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+              ይህንን SQL ኮድ ኮፒ በማድረግ በ Supabase SQL Editor ውስጥ <strong>Run</strong> ያድርጉት። ሁሉንም 5 ሰንጠረዦች (Tables) እና የStorage ፖሊሲዎችን በራስ-ሰር ይፈጥራል።
+            </p>
+
+            <div style="position: relative;">
+              <button type="button" id="btn-copy-sql" class="btn-copy" style="position: absolute; top: 12px; right: 12px; z-index: 5;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                <span>Copy SQL Code</span>
+              </button>
+              <pre style="background: #040907; border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.25rem; font-family: monospace; font-size: 0.85rem; color: #a7f3d0; overflow-x: auto; max-height: 380px;" id="sql-code-block">
+-- ==========================================================
+-- ETHIOPIAN LOTTERY COMPLETE SUPABASE SQL SCHEMA
+-- ==========================================================
+
+-- 1. Create lottery_images Table
+CREATE TABLE IF NOT EXISTS public.lottery_images (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    placement_key TEXT UNIQUE NOT NULL,
+    image_url TEXT NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- 2. Create lottery_categories Table
+CREATE TABLE IF NOT EXISTS public.lottery_categories (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    category_id TEXT UNIQUE NOT NULL,
+    name TEXT NOT NULL,
+    preview_image_1 TEXT,
+    preview_image_2 TEXT,
+    updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- 3. Create lottery_sections Table
+CREATE TABLE IF NOT EXISTS public.lottery_sections (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    category_fk UUID REFERENCES public.lottery_categories(id) ON DELETE CASCADE,
+    category_id TEXT NOT NULL,
+    section_number INT NOT NULL,
+    title TEXT NOT NULL,
+    price TEXT NOT NULL,
+    tickets_total INT DEFAULT 5000,
+    tickets_remaining INT DEFAULT 3000,
+    description TEXT,
+    image_1 TEXT,
+    image_2 TEXT,
+    updated_at TIMESTAMPTZ DEFAULT now(),
+    UNIQUE(category_id, section_number)
+);
+
+-- 4. Create ticket_purchases Table
+CREATE TABLE IF NOT EXISTS public.ticket_purchases (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    ticket_id TEXT UNIQUE NOT NULL,
+    phone_number TEXT NOT NULL,
+    category_id TEXT NOT NULL,
+    category_name TEXT NOT NULL,
+    section_number INT,
+    section_title TEXT,
+    ticket_price TEXT,
+    payment_method TEXT,
+    screenshot_url TEXT NOT NULL,
+    status TEXT DEFAULT 'Pending',
+    created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- 5. Create payment_methods Table
+CREATE TABLE IF NOT EXISTS public.payment_methods (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    method_id TEXT UNIQUE NOT NULL,
+    name TEXT NOT NULL,
+    english_name TEXT,
+    account_number TEXT NOT NULL,
+    account_holder TEXT,
+    icon TEXT,
+    display_order INT DEFAULT 1,
+    updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- 6. Enable Row Level Security (RLS)
+ALTER TABLE public.lottery_images ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.lottery_categories ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.lottery_sections ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.ticket_purchases ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.payment_methods ENABLE ROW LEVEL SECURITY;
+
+-- 7. Public Read & Insert Policies
+CREATE POLICY "Public Read Lottery Images" ON public.lottery_images FOR SELECT USING (true);
+CREATE POLICY "Public Read Categories" ON public.lottery_categories FOR SELECT USING (true);
+CREATE POLICY "Public Read Sections" ON public.lottery_sections FOR SELECT USING (true);
+CREATE POLICY "Public Read Payment Methods" ON public.payment_methods FOR SELECT USING (true);
+CREATE POLICY "Public Insert Ticket Purchase" ON public.ticket_purchases FOR INSERT WITH CHECK (true);
+CREATE POLICY "Admin Full Access Purchases" ON public.ticket_purchases FOR ALL USING (true);
+CREATE POLICY "Admin Full Access Images" ON public.lottery_images FOR ALL USING (true);
+CREATE POLICY "Admin Full Access Categories" ON public.lottery_categories FOR ALL USING (true);
+CREATE POLICY "Admin Full Access Sections" ON public.lottery_sections FOR ALL USING (true);
+CREATE POLICY "Admin Full Access Payment Methods" ON public.payment_methods FOR ALL USING (true);
+              </pre>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Image Lightbox Modal for Zooming Screenshots -->
+  <div class="modal-backdrop" id="image-lightbox-modal">
+    <div class="modal-card" style="max-width: 700px; text-align: center; padding: 1.5rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h4 style="color: #ffffff; font-weight: 700;">የክፍያ ደረሰኝ ምስል (Payment Screenshot)</h4>
+        <button type="button" class="modal-close-btn" id="lightbox-close-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <img id="lightbox-img" src="" alt="Proof Zoom" style="width: 100%; max-height: 70vh; object-fit: contain; border-radius: 8px; border: 1px solid var(--border-active);">
+    </div>
+  </div>
+
+  <!-- Add/Edit Payment Method Modal -->
+  <div class="modal-backdrop" id="payment-method-modal">
+    <div class="modal-card" style="max-width: 520px; padding: 1.75rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+        <h4 id="payment-modal-title" style="color: var(--gold-pure); font-size: 1.25rem; font-weight: 800;">የክፍያ አካውንት ማስተካከያ</h4>
+        <button type="button" class="modal-close-btn" id="payment-modal-close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <form id="payment-method-form">
+        <input type="hidden" id="pm-id" value="">
+        
+        <div class="form-group">
+          <label class="form-label">የባንክ/አገልግሎት ስም (Amharic Name)</label>
+          <input type="text" id="pm-name" class="form-input" placeholder="ምሳሌ፡ ኦሮሚያ ባንክ" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">የእንግሊዝኛ ስም (English Name)</label>
+          <input type="text" id="pm-en-name" class="form-input" placeholder="e.g. Oromia Bank">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">የሂሳብ ቁጥር (Account / Phone Number)</label>
+          <input type="text" id="pm-account" class="form-input" placeholder="1000..." required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">የሂሳብ ባለቤት ስም (Account Holder)</label>
+          <input type="text" id="pm-holder" class="form-input" placeholder="የኢትዮጵያ ብሔራዊ ሎተሪ አስተዳደር">
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
+          <button type="submit" class="btn-primary" style="flex: 1;">አስቀምጥ (Save)</button>
+          <button type="button" class="btn-sm btn-danger" id="btn-cancel-pm" style="padding: 0.75rem 1.25rem;">ሰርዝ</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast">
+    <span id="toast-message">ተከናውኗል!</span>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="/translations.js"></script>
+  <script type="module" src="/supabase-client.js"></script>
+  <script type="module" src="/admin.js"></script>
+</body>
+</html>

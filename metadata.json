@@ -1,0 +1,6 @@
+{
+  "name": "የኢትዮጲያ ሎተሪ እጣ (Ethiopian Online Lottery)",
+  "description": "የኢትዮጲያ ሎተሪ እጣ - Official online lottery ticket purchasing and prize drawing platform with multi-language support, interactive payments, and admin management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
