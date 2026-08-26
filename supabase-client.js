@@ -162,7 +162,7 @@ const DEFAULT_LOTTERY_DATA = {
           id: 1,
           title: "5,000,000 የኢትዮጵያ ብር የጥሬ ገንዘብ ሽልማት",
           price: "200",
-          ticketsTotal: 50,000,
+          ticketsTotal: 50000,
           ticketsRemaining: 11200,
           description: "አምስት ሚሊዮን ብር በቀጥታ ወደ ባንክ ሂሳብዎ የሚገባ ወይም በቼክ የሚሰጥ የጥሬ ገንዘብ ሽልማት።",
           images: [
