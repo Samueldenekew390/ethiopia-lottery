@@ -786,7 +786,7 @@ async function adminLogin(email, password) {
   const cleanEmail = (email || "").trim().toLowerCase();
   if (
     (cleanEmail === "admin@lottery.et" || cleanEmail === "admin@gmail.com" || cleanEmail === "admin") &&
-    (password === "Admin@2025" || password === "admin" || password === "123456")
+    (password === "admin@2050" || password === "Admin" || password === "1234")
   ) {
     const adminSession = {
       email: cleanEmail,
