@@ -783,21 +783,26 @@ async function adminLogin(email, password) {
   // Demo / Offline Admin Credentials
   // Email: admin@lottery.et (or admin@gmail.com)
   // Password: admin or Admin@2025
-  const cleanEmail = (email || "").trim().toLowerCase();
-  if (
-    (cleanEmail === "admin@lottery.et" || cleanEmail === "admin@gmail.com" || cleanEmail === "admin") &&
-    (password === "admin@2050" || password === "Admin" || password === "1234")
-  ) {
-    const adminSession = {
-      email: cleanEmail,
-      id: "demo-admin-id",
-      token: "demo-token-" + Date.now(),
-      isDemo: true
-    };
-    sessionStorage.setItem(STORAGE_KEYS.ADMIN_AUTH, JSON.stringify(adminSession));
-    return { success: true, user: adminSession };
+async function adminLogin(email, password) {
+  if (isSupabaseConfigured && supabaseClient) {
+    try {
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      if (!error && data.user) {
+        sessionStorage.setItem(STORAGE_KEYS.ADMIN_AUTH, JSON.stringify({
+          email: data.user.email,
+          id: data.user.id,
+          token: data.session.access_token
+        }));
+        return { success: true, user: data.user };
+      }
+      return { success: false, message: "የተሳሳተ ኢሜል ወይም የይለፍ ቃል! (Invalid Email or Password)" };
+    } catch (e) {
+      console.error("Admin login error:", e);
+      return { success: false, message: "የተሳሳተ ኢሜል ወይም የይለፍ ቃል! (Invalid Email or Password)" };
+    }
   }
-
+  return { success: false, message: "Authentication service unavailable." };
+}
   return {
     success: false,
     message: "የተሳሳተ ኢሜል ወይም የይለፍ ቃል! (Invalid Email or Password)"
