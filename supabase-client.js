@@ -55,8 +55,8 @@ const DEFAULT_LOTTERY_DATA = {
       sections: [
         {
           id: 1,
-          title: "Toyota Land Cruiser V8 2024",
-          price: "500",
+          title: "Jetour Dashing 2025",
+          price: "2500",
           ticketsTotal: 5000,
           ticketsRemaining: 3420,
           description: "ዘመናዊ ሙሉ አማራጭ ያለው ቶዮታ ላንድ ክሩዘር ቪ8 (Toyota Land Cruiser V8) መኪና ከሙሉ ሰነድና ኢንሹራንስ ጋር።",
@@ -67,8 +67,8 @@ const DEFAULT_LOTTERY_DATA = {
         },
         {
           id: 2,
-          title: "Hyundai Tucson Limited 2024",
-          price: "300",
+          title: "HOWO Sinotruck",
+          price: "2500",
           ticketsTotal: 8000,
           ticketsRemaining: 5190,
           description: "አዲስ የከተማ ክሮስኦቨር ሂዩንዳይ ቱሶን 2024 ሞዴል ከዜሮ ኪሎሜትር ጋር።",
@@ -91,9 +91,9 @@ const DEFAULT_LOTTERY_DATA = {
         {
           id: 1,
           title: "ባለ 3 መኝታ ዘመናዊ አፓርትመንት (CMC)",
-          price: "1,000",
-          ticketsTotal: 3000,
-          ticketsRemaining: 1840,
+          price: "10,000",
+          ticketsTotal: 5000,
+          ticketsRemaining: 2840,
           description: "ሲኤምሲ አካባቢ የሚገኝ ባለ 3 መኝታ፣ 2 መታጠቢያ ቤትና ዘመናዊ ኪችን ካቢኔት ያለው የቅንጦት አፓርትመንት።",
           images: [
             "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1000&q=80",
@@ -102,8 +102,8 @@ const DEFAULT_LOTTERY_DATA = {
         },
         {
           id: 2,
-          title: "ባለ 2 መኝታ ቪላ ቤት (ሰሚት)",
-          price: "600",
+          title: "ባለ 2 መኝታ ኮንዶሚኒዬም ቤት (ሰሚት)",
+          price: "8000",
           ticketsTotal: 4500,
           ticketsRemaining: 2980,
           description: "ሰሚት አካባቢ 200 ካሬ ሜትር ላይ ያረፈ ውብ ግቢ ያለው ዘመናዊ ቪላ መኖሪያ ቤት።",
@@ -161,8 +161,8 @@ const DEFAULT_LOTTERY_DATA = {
         {
           id: 1,
           title: "5,000,000 የኢትዮጵያ ብር የጥሬ ገንዘብ ሽልማት",
-          price: "300",
-          ticketsTotal: 15000,
+          price: "200",
+          ticketsTotal: 50,000,
           ticketsRemaining: 11200,
           description: "አምስት ሚሊዮን ብር በቀጥታ ወደ ባንክ ሂሳብዎ የሚገባ ወይም በቼክ የሚሰጥ የጥሬ ገንዘብ ሽልማት።",
           images: [
@@ -173,8 +173,8 @@ const DEFAULT_LOTTERY_DATA = {
         {
           id: 2,
           title: "2,000,000 የኢትዮጵያ ብር የጥሬ ገንዘብ ሽልማት",
-          price: "150",
-          ticketsTotal: 20000,
+          price: "100",
+          ticketsTotal: 30000,
           ticketsRemaining: 14500,
           description: "ሁለት ሚሊዮን የኢትዮጵያ ብር በጥሬ ገንዘብ ለእድለኛ አሸናፊዎች።",
           images: [
@@ -266,7 +266,7 @@ const DEFAULT_LOTTERY_DATA = {
         {
           id: 1,
           title: "የሰበተ የወሎ የበዓል ሰንጋ በግ",
-          price: "50",
+          price: "150",
           ticketsTotal: 5000,
           ticketsRemaining: 3200,
           description: "ለአዲስ አመት እና ለመስቀል በዓል የሚሆን የሰባ የወሎ ትልቅ የበዓል ሰንጋ በግ።",
@@ -278,7 +278,7 @@ const DEFAULT_LOTTERY_DATA = {
         {
           id: 2,
           title: "የአርሲ ምርጥ ዝርያ የበዓል በግ",
-          price: "40",
+          price: "150",
           ticketsTotal: 7000,
           ticketsRemaining: 4900,
           description: "ምርጥ የአርሲ ተወላጅ የሆነ የሰባ የበዓል በግ።",
