@@ -82,7 +82,7 @@ const DEFAULT_LOTTERY_DATA = {
     {
       id: "condo",
       key: "cat_condo",
-      name: "ኮንደሚኒዬም",
+      name: "ቤት",
       previewImages: [
         "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1000&q=80",
         "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80"
@@ -106,7 +106,7 @@ const DEFAULT_LOTTERY_DATA = {
           price: "8000",
           ticketsTotal: 4500,
           ticketsRemaining: 2980,
-          description: "ሰሚት አካባቢ 200 ካሬ ሜትር ላይ ያረፈ ውብ ግቢ ያለው ዘመናዊ ቪላ መኖሪያ ቤት።",
+          description: "ሰሚት አካባቢ ላይ ያረፈ ውብ መኖሪያ ቤት።",
           images: [
             "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80",
             "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1000&q=80"
