@@ -243,7 +243,7 @@ const DEFAULT_LOTTERY_DATA = {
         {
           id: 2,
           title: "LG 65\" OLED Cinema 4K Smart TV",
-          price: "80",
+          price: "100",
           ticketsTotal: 10000,
           ticketsRemaining: 7400,
           description: "ኤልጂ 65 ኢንች ኦሌድ ሲኒማ ቴሌቪዥን እጅግ ጥራት ካለው ጥቁር ንፅፅር ጋር።",
