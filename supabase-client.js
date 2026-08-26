@@ -91,7 +91,7 @@ const DEFAULT_LOTTERY_DATA = {
         {
           id: 1,
           title: "ባለ 3 መኝታ ዘመናዊ አፓርትመንት (CMC)",
-          price: "10,000",
+          price: "10000",
           ticketsTotal: 5000,
           ticketsRemaining: 2840,
           description: "ሲኤምሲ አካባቢ የሚገኝ ባለ 3 መኝታ፣ 2 መታጠቢያ ቤትና ዘመናዊ ኪችን ካቢኔት ያለው የቅንጦት አፓርትመንት።",
